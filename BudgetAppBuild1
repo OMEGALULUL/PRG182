@@ -1,0 +1,135 @@
+// Please when changing lines of code on this program make sure to
+// implement a dev note inside the README.md file to keep all of us in the loop for any bugs/breaks please.
+
+
+using System;
+using System.Collections.Generic;
+
+namespace StudentBudgetTracker
+{
+    // 1 Basic Data Structure to hold transaction details
+    public class Transaction
+    {
+        public string Description { get; set; }
+        public decimal Amount { get; set; }
+        public string Category { get; set; }
+        public string Type { get; set; } // "Income" or "Expense"
+        public DateTime Date { get; set; }
+
+        public Transaction(string description, decimal amount, string category, string type)
+        {
+            Description = description;
+            Amount = amount;
+            Category = category;
+            Type = type;
+            Date = DateTime.Now;
+        }
+    }
+
+    class Program
+    {
+        // A list to store all transactions in memory
+        static List<Transaction> transactions = new List<Transaction>();
+
+        static void Main(string[] args)
+        {
+            bool isRunning = true;
+
+            // 2 Control Structure: Menu-driven loop (Like with PRG181 Psuedocode)
+            while (isRunning)
+            {
+                Console.Clear();
+                Console.WriteLine("=== Apartment Budget Tracker ===");
+                Console.WriteLine("1. Add Income");
+                Console.WriteLine("2. Add Expense");
+                Console.WriteLine("3. View Summary");
+                Console.WriteLine("4. Exit");
+                Console.Write("\nSelect an option (1-4): ");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        AddTransaction("Income");
+                        break;
+                    case "2":
+                        AddTransaction("Expense");
+                        break;
+                    case "3":
+                        ViewSummary();
+                        break;
+                    case "4":
+                        isRunning = false;
+                        Console.WriteLine("Exiting program. Goodbye!");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Press any key to try again.");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
+
+        // 3 The method to handle adding transactions
+        static void AddTransaction(string type)
+        {
+            Console.Clear();
+            Console.WriteLine($"--- Add New {type} ---");
+
+            Console.Write("Enter description (e.g., Groceries, Rent): ");
+            string description = Console.ReadLine();
+
+            Console.Write("Enter amount: ");
+            if (!decimal.TryParse(Console.ReadLine(), out decimal amount))
+            {
+                Console.WriteLine("Invalid amount format. Press any key to return to the menu.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("Enter category (e.g., Utilities, Entertainment): ");
+            string category = Console.ReadLine();
+
+            // Create a new transaction object and add it to the list
+            transactions.Add(new Transaction(description, amount, category, type));
+
+            Console.WriteLine($"\n{type} recorded successfully! Press any key to continue.");
+            Console.ReadKey();
+        }
+
+        // 4 The Method i used to generate summaries
+        static void ViewSummary()
+        {
+            Console.Clear();
+            Console.WriteLine("--- Financial Summary ---");
+
+            decimal totalIncome = 0;
+            decimal totalExpense = 0;
+
+            // Loop through stored data to calculate totals
+            foreach (var t in transactions)
+            {
+                if (t.Type == "Income")
+                {
+                    totalIncome += t.Amount;
+                }
+                else if (t.Type == "Expense")
+                {
+                    totalExpense += t.Amount;
+                }
+            }
+
+            Console.WriteLine($"Total Income:   R {totalIncome}");
+            Console.WriteLine($"Total Expenses: R {totalExpense}");
+            Console.WriteLine("-------------------------");
+            Console.WriteLine($"Net Balance:    R {totalIncome - totalExpense}");
+
+            Console.WriteLine("\nPress any key to return to the menu.");
+            Console.ReadKey();
+        }
+    }
+}
+
+// For now this is the end of the program, note that I made it in the CLI-based format but I will be working on a GUI version of this program IF WE WANT A GUI version obv,
+// I just wanted to get the basic functionality down first before moving on
