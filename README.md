@@ -6,7 +6,7 @@ Group project for PRG182. README contains info on dev work (Dev notes for us to 
 
 
 
-14/05/2026, Uploaded the tester model and the C# file to the repo. when we commit changes or document everything as a note make sure to use "--Your name" to make sure we know who made the note in the README file please. --Chris
+14/05/2026, Uploaded the tester model and the C# file to the repo. when we commit changes or document everything as a note make sure to use to make sure the note in the README file is updated please.
 
 
 14/05/2026 - Uploaded the base tester model and the initial C# file to the repo. The main menu now asks for a user's name before showing options. The menu options were renamed to: Add income, Add expenses, Display Balance, and Expense review. The old Exit option was removed and the program now runs until sign-out. ViewSummary was renamed to DisplayBalance. Expense review is just a placeholder for now till implemented 
